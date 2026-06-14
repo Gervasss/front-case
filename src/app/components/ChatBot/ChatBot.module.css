@@ -1,0 +1,250 @@
+.chatRoot {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 60;
+  display: grid;
+  justify-items: end;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.panel,
+.fab {
+  pointer-events: auto;
+}
+
+.panel {
+  width: min(380px, calc(100vw - 28px));
+  height: min(620px, calc(100vh - 112px));
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--surface-primary);
+  color: var(--text-primary);
+  box-shadow: 0 22px 70px rgba(8, 44, 42, 0.22);
+}
+
+.header {
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--primary-color);
+  color: #ffffff;
+}
+
+.header > div {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header span {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.header strong,
+.header small {
+  display: block;
+  line-height: 1.2;
+}
+
+.header strong {
+  font-size: 0.98rem;
+  font-weight: 950;
+}
+
+.header small {
+  font-size: 0.78rem;
+  opacity: 0.88;
+}
+
+.header button,
+.fab,
+.form button {
+  display: grid;
+  place-items: center;
+  border: 0;
+  cursor: pointer;
+}
+
+.header button {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.messages {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  overflow-y: auto;
+  background: var(--bg-base);
+}
+
+.message {
+  width: fit-content;
+  max-width: 86%;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 10px 12px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.message[data-role="assistant"] {
+  align-self: flex-start;
+  background: var(--surface-primary);
+}
+
+.message[data-role="user"] {
+  align-self: flex-end;
+  border-color: var(--primary-color);
+  background: var(--primary-color);
+  color: #ffffff;
+}
+
+.typingMessage {
+  min-width: 58px;
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding-inline: 13px;
+}
+
+.typingDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--text-secondary);
+  opacity: 0.38;
+  animation: typingPulse 1.15s ease-in-out infinite;
+}
+
+.typingDot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typingDot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.suggestions button {
+  width: 100%;
+  min-height: 34px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  padding: 0 11px;
+  background: var(--surface-secondary);
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 850;
+  white-space: normal;
+  cursor: pointer;
+}
+
+.suggestions button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr 42px;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--surface-primary);
+}
+
+.form input {
+  min-width: 0;
+  height: 42px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 0 12px;
+  background: var(--input-bg);
+  color: var(--text-primary);
+  font: inherit;
+  outline: none;
+}
+
+.form input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.form button {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  background: var(--primary-color);
+  color: #ffffff;
+}
+
+.form button:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+.fab {
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  background: var(--primary-color);
+  color: #ffffff;
+  box-shadow: 0 14px 36px rgba(8, 44, 42, 0.24);
+}
+
+@media (max-width: 820px) {
+  .chatRoot {
+    right: 14px;
+    bottom: 14px;
+  }
+
+  .panel {
+    height: min(560px, calc(100vh - 96px));
+  }
+}
+
+@keyframes typingPulse {
+  0%,
+  80%,
+  100% {
+    opacity: 0.38;
+    transform: translateY(0);
+  }
+
+  40% {
+    opacity: 0.9;
+    transform: translateY(-3px);
+  }
+}

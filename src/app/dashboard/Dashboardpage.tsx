@@ -86,10 +86,28 @@ export default function DashboardPage() {
     }
 
     return (
+      lead.imovel ??
+      imoveis.find((imovel) => imovel.id === lead.imovelId) ??
       imoveis.find(
         (imovel) => imovel.title === lead.company && imovel.price === lead.value,
       ) ?? null
     );
+  }
+
+  function findLeadStatusName(lead: Lead | null) {
+    if (!lead) {
+      return undefined;
+    }
+
+    return lead.status?.name ?? statuses.find((status) => status.id === lead.statusId)?.name;
+  }
+
+  function enrichLead(lead: Lead) {
+    return {
+      ...lead,
+      status: lead.status ?? statuses.find((status) => status.id === lead.statusId),
+      imovel: findLeadImovel(lead),
+    };
   }
 
   return (
@@ -192,7 +210,7 @@ export default function DashboardPage() {
                             ))}
                           </select>
                         </label>
-                        <button className={styles.detailsButton} type="button" onClick={() => setSelectedLead(lead)}>
+                        <button className={styles.detailsButton} type="button" onClick={() => setSelectedLead(enrichLead(lead))}>
                           Ver detalhes
                         </button>
                       </article>
@@ -206,7 +224,12 @@ export default function DashboardPage() {
           ) : null}
         </section>
       </section>
-      <ModalLead lead={selectedLead} imovel={findLeadImovel(selectedLead)} onClose={() => setSelectedLead(null)} />
+      <ModalLead
+        lead={selectedLead}
+        imovel={findLeadImovel(selectedLead)}
+        statusName={findLeadStatusName(selectedLead)}
+        onClose={() => setSelectedLead(null)}
+      />
     </main>
   );
 }

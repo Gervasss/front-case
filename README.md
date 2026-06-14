@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SI Solucoes Imobiliarias - Frontend
 
-## Getting Started
+Frontend NextJS do case tecnico, com login/cadastro, dashboard Kanban, gestao de leads,
+gestao de imoveis, gestao de status do funil e janela de chatbot integrada ao backend NestJS.
 
-First, run the development server:
+## Rodar localmente
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Configure a URL da API em `.env.local`:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3001/api
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Depois inicie o servidor:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```powershell
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+A aplicacao fica em:
 
-## Learn More
+```txt
+http://localhost:3000
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Chatbot
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+O chatbot aparece nas telas autenticadas depois do login. O frontend chama:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```txt
+POST http://localhost:3001/api/ai/chat
+```
 
-## Deploy on Vercel
+O backend NestJS encaminha essa chamada para o microservico FastAPI configurado por
+`AI_SERVICE_URL`, normalmente:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```txt
+http://localhost:8000
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Fluxo do chat:
+
+```txt
+ChatBot.tsx
+  -> envia messages + context da tela atual para POST /api/ai/chat
+Backend NestJS
+  -> identifica o usuario autenticado
+  -> busca status, leads, proximos contatos e imoveis no banco
+  -> monta crm e matchedCrm
+  -> encaminha tudo para o ai-service
+ai-service
+  -> usa OpenAI quando OPENAI_API_KEY existe
+  -> usa fallback local quando a chave nao existe
+```
+
+O frontend nao busca leads/imoveis para montar a resposta da IA. Ele envia apenas:
+
+- historico recente da conversa;
+- pergunta atual do usuario;
+- contexto da rota atual, como dashboard, leads, imoveis ou status.
+
+O backend e responsavel por relacionar lead + imovel e montar `matchedCrm`, um recorte
+priorizado pelas ultimas mensagens do usuario. Exemplo: ao perguntar sobre o cliente
+`Gervasio` e depois informar `Apartamento Candeias`, o backend cruza esses termos com
+os leads e imoveis do CRM antes de chamar a IA.
+
+Para rodar o microservico:
+
+```powershell
+cd C:\Projetos\ai-service
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+uvicorn main:app --reload --port 8000
+```

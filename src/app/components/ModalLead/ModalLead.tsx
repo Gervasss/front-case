@@ -7,6 +7,7 @@ import styles from "./ModalLead.module.css";
 type ModalLeadProps = {
   lead: Lead | null;
   imovel?: Imovel | null;
+  statusName?: string;
   onClose: () => void;
 };
 
@@ -22,7 +23,7 @@ function formatCurrency(value?: number | null) {
   }).format(value);
 }
 
-export function ModalLead({ lead, imovel, onClose }: ModalLeadProps) {
+export function ModalLead({ lead, imovel, statusName, onClose }: ModalLeadProps) {
   if (!lead) {
     return null;
   }
@@ -72,7 +73,7 @@ export function ModalLead({ lead, imovel, onClose }: ModalLeadProps) {
             <dl>
               <div>
                 <dt>Status</dt>
-                <dd>{lead.status?.name ?? "Sem status"}</dd>
+                <dd>{lead.status?.name ?? statusName ?? "Sem status"}</dd>
               </div>
               <div>
                 <dt>Origem</dt>

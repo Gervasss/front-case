@@ -56,7 +56,9 @@ export type Lead = {
   updatedAt: string;
   ownerId?: string;
   statusId: string;
+  imovelId?: string | null;
   status?: Status;
+  imovel?: Imovel | null;
 };
 
 export type CreateLeadPayload = {
@@ -69,6 +71,7 @@ export type CreateLeadPayload = {
   notes?: string;
   nextFollowUp?: string;
   statusId: string;
+  imovelId?: string;
 };
 
 export type UpdateLeadPayload = Partial<CreateLeadPayload>;
@@ -141,6 +144,12 @@ export type ChatMessage = {
 export type ChatPayload = {
   messages: ChatMessage[];
   context?: string;
+};
+
+export type ChatResponse = {
+  reply: string;
+  suggestions?: string[];
+  provider?: string;
 };
 
 export type RequestOptions = Omit<AxiosRequestConfig, "baseURL" | "data" | "url"> & {

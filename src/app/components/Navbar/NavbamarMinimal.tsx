@@ -2,6 +2,7 @@
 
 import {
   IconBuildingCommunity,
+  IconFlag,
   IconHome2,
   IconLayoutKanban,
   IconLogout,
@@ -57,6 +58,7 @@ function NavbarLink({ icon: Icon, label, href, active, onClick }: NavbarLinkProp
 const navItems = [
   { icon: IconHome2, label: "Dashboard", href: "/dashboard" },
   { icon: IconLayoutKanban, label: "Leads", href: "/leads" },
+  { icon: IconFlag, label: "Status", href: "/status" },
   { icon: IconBuildingCommunity, label: "Imoveis", href: "/imoveis" },
 ];
 

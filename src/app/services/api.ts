@@ -6,6 +6,7 @@ import {
   ApiError,
   AuthResponse,
   ChatPayload,
+  ChatResponse,
   CreateImovelPayload,
   CreateLeadPayload,
   CreateStatusPayload,
@@ -28,6 +29,7 @@ export type {
   AuthResponse,
   ChatMessage,
   ChatPayload,
+  ChatResponse,
   ChatRole,
   CreateImovelPayload,
   CreateLeadPayload,
@@ -350,7 +352,7 @@ export const api = {
   // AI
   ai: {
     // Chat completion
-    chat<TResponse = unknown>(payload: ChatPayload, token?: string) {
+    chat<TResponse = ChatResponse>(payload: ChatPayload, token?: string) {
       return request<TResponse>("/ai/chat", {
         method: "POST",
         body: payload,

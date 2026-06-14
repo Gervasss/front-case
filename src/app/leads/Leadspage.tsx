@@ -64,7 +64,7 @@ function toFormState(lead: Lead): LeadFormState {
     notes: lead.notes ?? "",
     nextFollowUp: lead.nextFollowUp ? lead.nextFollowUp.slice(0, 10) : "",
     statusId: lead.statusId,
-    imovelId: "",
+    imovelId: lead.imovelId ?? lead.imovel?.id ?? "",
   };
 }
 
@@ -88,8 +88,7 @@ export default function LeadsPage() {
     setAlert(null);
 
     try {
-      const [kanbanColumns, fallbackStatuses, leadList, imovelResult] = await Promise.all([
-        api.leads.kanban().catch(() => []),
+      const [statusList, leadList, imovelResult] = await Promise.all([
         api.statuses.list().catch(() => []),
         api.leads.list(),
         api.imoveis.list().then(
@@ -97,13 +96,7 @@ export default function LeadsPage() {
           (error) => ({ items: [] as Imovel[], error }),
         ),
       ]);
-      const statusList = kanbanColumns.map((column) => ({
-        id: column.id,
-        name: column.name,
-        color: column.color,
-        order: column.order,
-      }));
-      const nextStatuses = statusList.length ? statusList : fallbackStatuses;
+      const nextStatuses = [...statusList].sort((first, second) => first.order - second.order);
 
       setStatuses(nextStatuses);
       setLeads(leadList);
@@ -162,7 +155,7 @@ export default function LeadsPage() {
     );
 
     setEditingLead(lead);
-    setForm({ ...toFormState(lead), imovelId: selectedImovel?.id ?? "" });
+    setForm({ ...toFormState(lead), imovelId: lead.imovelId ?? lead.imovel?.id ?? selectedImovel?.id ?? "" });
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -180,6 +173,7 @@ export default function LeadsPage() {
       notes: form.notes || undefined,
       nextFollowUp: form.nextFollowUp || undefined,
       statusId: form.statusId,
+      imovelId: form.imovelId || undefined,
     };
 
     try {
