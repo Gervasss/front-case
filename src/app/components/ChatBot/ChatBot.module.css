@@ -83,8 +83,13 @@
   width: 34px;
   height: 34px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.15);
-  color: #ffffff;
+ background: rgba(224, 221, 221, 0.993);
+  color: var(--primary-color);
+
+}
+.header button:hover {
+  transition:calc(0.3s);
+  background: rgb(202, 200, 200);
 }
 
 .messages {

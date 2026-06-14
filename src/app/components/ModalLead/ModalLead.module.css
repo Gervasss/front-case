@@ -48,13 +48,14 @@
   border-radius: 8px;
   display: grid;
   place-items: center;
-  background: rgba(189, 22, 22, 0.993);
-  color: #ffffff;
+  background: rgba(224, 221, 221, 0.993);
+  color: var(--primary-color);
   cursor: pointer;
 }
 
 .header button:hover {
-  background: rgba(160, 19, 19, 0.808);
+  transition:calc(0.3s);
+  background: rgb(202, 200, 200);
 }
 
 .content {

@@ -23,6 +23,21 @@ function formatCurrency(value?: number | null) {
   }).format(value);
 }
 
+function formatDate(value?: string | null) {
+  if (!value) {
+    return "Não definido";
+  }
+
+  const [datePart] = value.split("T");
+  const [year, month, day] = datePart.split("-");
+
+  if (!year || !month || !day) {
+    return "Não definido";
+  }
+
+  return `${day}/${month}/${year}`;
+}
+
 export function ModalLead({ lead, imovel, statusName, onClose }: ModalLeadProps) {
   if (!lead) {
     return null;
@@ -59,11 +74,11 @@ export function ModalLead({ lead, imovel, statusName, onClose }: ModalLeadProps)
               </div>
               <div>
                 <dt>E-mail</dt>
-                <dd>{lead.email || "Nao informado"}</dd>
+                <dd>{lead.email || "Não informado"}</dd>
               </div>
               <div>
                 <dt>Telefone</dt>
-                <dd>{lead.phone || "Nao informado"}</dd>
+                <dd>{lead.phone || "Não informado"}</dd>
               </div>
             </dl>
           </article>
@@ -84,31 +99,31 @@ export function ModalLead({ lead, imovel, statusName, onClose }: ModalLeadProps)
                 <dd>{formatCurrency(lead.value)}</dd>
               </div>
               <div>
-                <dt>Proximo contato</dt>
-                <dd>{lead.nextFollowUp ? new Date(lead.nextFollowUp).toLocaleDateString("pt-BR") : "Nao definido"}</dd>
+                <dt>Próximo contato</dt>
+                <dd>{formatDate(lead.nextFollowUp)}</dd>
               </div>
             </dl>
             {lead.notes ? <p className={styles.notes}>{lead.notes}</p> : null}
           </article>
 
           <article className={styles.section}>
-            <h3>Imovel</h3>
+            <h3>Imóvel</h3>
             <dl>
               <div>
-                <dt>Titulo</dt>
+                <dt>Título</dt>
                 <dd>{imovel?.title || lead.company}</dd>
               </div>
               <div>
                 <dt>Tipo</dt>
-                <dd>{imovel?.propertyType || "Nao informado"}</dd>
+                <dd>{imovel?.propertyType || "Não informado"}</dd>
               </div>
               <div>
-                <dt>Endereco</dt>
-                <dd>{imovel?.address || "Nao informado"}</dd>
+                <dt>Endereço</dt>
+                <dd>{imovel?.address || "Não informado"}</dd>
               </div>
               <div>
                 <dt>Cidade/UF</dt>
-                <dd>{cityState || "Nao informado"}</dd>
+                <dd>{cityState || "Não informado"}</dd>
               </div>
               <div>
                 <dt>Valor</dt>

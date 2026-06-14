@@ -44,7 +44,7 @@ export default function LoginPage() {
       const message =
         error instanceof ApiError
           ? error.message
-          : "Nao foi possivel concluir a solicitacao. Confira os dados e tente novamente.";
+          : "Não foi possível concluir a solicitação. Confira os dados e tente novamente.";
 
       setAlert({ message, type: "error" });
     } finally {

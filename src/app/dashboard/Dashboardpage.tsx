@@ -51,7 +51,7 @@ export default function DashboardPage() {
       const message =
         error instanceof ApiError
           ? error.message
-          : "Nao foi possivel carregar o dashboard.";
+          : "Não foi possível carregar o dashboard.";
       setAlert({ type: "error", message });
     } finally {
       setIsLoading(false);
@@ -75,7 +75,7 @@ export default function DashboardPage() {
       const message =
         error instanceof ApiError
           ? error.message
-          : "Nao foi possivel mover o lead.";
+          : "Não foi possível mover o lead.";
       setAlert({ type: "error", message });
     }
   }
@@ -194,7 +194,7 @@ export default function DashboardPage() {
                         </div>
                         <div className={styles.leadInfoGrid}>
                           <span>Cliente</span>
-                          <span>Imovel</span>
+                          <span>Imóvel</span>
                           <span>Valor</span>
                           <strong>{lead.contactName}</strong>
                           <strong>{lead.company}</strong>

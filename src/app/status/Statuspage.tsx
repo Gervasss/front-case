@@ -56,7 +56,7 @@ export default function StatusPage() {
       const message =
         error instanceof ApiError
           ? error.message
-          : "Nao foi possivel carregar os status.";
+          : "Não foi possível carregar os status.";
       setAlert({ type: "error", message });
       return [];
     } finally {
@@ -113,7 +113,7 @@ export default function StatusPage() {
       const message =
         error instanceof ApiError
           ? error.message
-          : "Nao foi possivel salvar o status.";
+          : "Não foi possível salvar o status.";
       setAlert({ type: "error", message });
     } finally {
       setIsSaving(false);
@@ -135,7 +135,7 @@ export default function StatusPage() {
       const message =
         error instanceof ApiError
           ? error.message
-          : "Nao foi possivel apagar o status. Verifique se existem leads usando este status.";
+          : "Não foi possível apagar o status. Verifique se existem leads usando este status.";
       setAlert({ type: "error", message });
     }
   }
@@ -179,14 +179,14 @@ export default function StatusPage() {
                 </label>
               </div>
 
-              <div className={styles.preview} aria-label="Previa do status">
+              <div className={styles.preview} aria-label="Prévia do status">
                 <i style={{ backgroundColor: form.color }} />
                 <strong>{form.name || "Novo status"}</strong>
                 <span>Coluna {form.order || statuses.length + 1}</span>
               </div>
 
               <button className={styles.primaryButton} type="submit" disabled={isSaving}>
-                {isSaving ? "Salvando..." : editingStatus ? "Salvar edicao" : "Criar status"}
+                {isSaving ? "Salvando..." : editingStatus ? "Salvar edição" : "Criar status"}
               </button>
             </form>
           </section>

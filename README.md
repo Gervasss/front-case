@@ -1,24 +1,25 @@
-# SI Solucoes Imobiliarias - Frontend
+# SI Soluções Imobiliárias - Frontend
 
-Frontend em Next.js do CRM imobiliario SI - Solucoes Imobiliarias. A aplicacao
-inclui autenticacao, dashboard Kanban, gestao de leads, gestao de imoveis,
-gestao de status do funil e chatbot integrado ao backend NestJS e ao
-microservico de IA.
+Frontend em Next.js do CRM imobiliário SI - Soluções Imobiliárias. A aplicação
+inclui autenticação, dashboard Kanban, gestão de leads, gestão de imóveis,
+gestão de status do funil e chatbot integrado ao backend NestJS e ao
+microserviço de IA.
 
-## Sumario
+## Sumário
 
 - [Tecnologias](#tecnologias)
 - [Funcionalidades](#funcionalidades)
 - [Estrutura de pastas](#estrutura-de-pastas)
-- [Variaveis de ambiente](#variaveis-de-ambiente)
+- [Variáveis de ambiente](#variáveis-de-ambiente)
 - [Rodar localmente](#rodar-localmente)
 - [Scripts](#scripts)
-- [Rotas da aplicacao](#rotas-da-aplicacao)
+- [Rotas da aplicação](#rotas-da-aplicação)
 - [Fluxo de dados](#fluxo-de-dados)
 - [Chatbot e IA](#chatbot-e-ia)
-- [Autenticacao](#autenticacao)
+- [Autenticação](#autenticação)
+- [Testes](#testes)
 - [Estilos e UI](#estilos-e-ui)
-- [Validacao](#validacao)
+- [Validação](#validação)
 - [Projetos relacionados](#projetos-relacionados)
 
 ## Tecnologias
@@ -30,18 +31,20 @@ microservico de IA.
 - Mantine Core
 - Tabler Icons
 - Axios
-- Tailwind/PostCSS configurado como dependencia de estilo
+- Tailwind/PostCSS configurado como dependência de estilo
+- Vitest
+- React Testing Library
 
 ## Funcionalidades
 
-- Login e cadastro de usuarios.
+- Login e cadastro de usuários.
 - Dashboard Kanban de leads.
-- Movimentacao de leads entre status.
-- Cadastro, edicao e exclusao de leads.
-- Cadastro, edicao e exclusao de imoveis.
-- Relacionamento de um imovel com varios leads.
-- Cadastro e organizacao dos status usados no funil.
-- Modal de detalhes do lead com dados de cliente, status e imovel.
+- Movimentação de leads entre status.
+- Cadastro, edição e exclusão de leads.
+- Cadastro, edição e exclusão de imóveis.
+- Relacionamento de um imóvel com vários leads.
+- Cadastro e organização dos status usados no funil.
+- Modal de detalhes do lead com dados de cliente, status e imóvel.
 - Chatbot flutuante com contexto da tela atual.
 - Tema claro/escuro via `ThemeContext`.
 
@@ -62,7 +65,7 @@ front-case/
 |       |-- app.tsx                       # Providers globais: Mantine, tema e ChatBot
 |       |-- layout.tsx                    # Layout raiz do App Router
 |       |-- page.tsx                      # Rota inicial
-|       |-- globals.css                   # Variaveis globais e estilos base
+|       |-- globals.css                   # Variáveis globais e estilos base
 |       |-- favicon.ico
 |       |-- components/
 |       |   |-- Alert/
@@ -104,17 +107,21 @@ front-case/
 |       |   `-- LoginPage.module.css
 |       |-- services/
 |       |   `-- api.ts                    # Cliente Axios e endpoints da API
-|       `-- types/
-|           `-- types.ts                  # Tipos compartilhados do frontend
+|       |-- types/
+|       |   `-- types.ts                  # Tipos compartilhados do frontend
+|       `-- __tests__/                    # Testes de componentes e abas
+|-- src/test/
+|   `-- setup.ts                          # Setup global do Vitest
 |-- package.json
 |-- next.config.ts
 |-- tsconfig.json
+|-- vitest.config.mts
 |-- eslint.config.mjs
 |-- postcss.config.mjs
 `-- README.md
 ```
 
-## Variaveis de ambiente
+## Variáveis de ambiente
 
 Crie ou atualize o arquivo `.env.local`:
 
@@ -122,9 +129,9 @@ Crie ou atualize o arquivo `.env.local`:
 NEXT_PUBLIC_API_URL=http://localhost:3001/api
 ```
 
-Essa variavel define a URL base usada em `src/app/services/api.ts`.
+Essa variável define a URL base usada em `src/app/services/api.ts`.
 
-Se ela nao existir, o frontend usa:
+Se ela não existir, o frontend usa:
 
 ```txt
 http://localhost:3001/api
@@ -132,7 +139,7 @@ http://localhost:3001/api
 
 ## Rodar localmente
 
-Instale as dependencias:
+Instale as dependências:
 
 ```powershell
 npm install
@@ -144,19 +151,19 @@ Inicie o servidor de desenvolvimento:
 npm run dev
 ```
 
-A aplicacao fica disponivel em:
+A aplicação fica disponível em:
 
 ```txt
 http://localhost:3000
 ```
 
-Para o frontend funcionar completamente, tambem mantenha o backend rodando:
+Para o frontend funcionar completamente, também mantenha o backend rodando:
 
 ```txt
 http://localhost:3001/api
 ```
 
-E, para o chatbot com IA, o microservico:
+E, para o chatbot com IA, o microserviço:
 
 ```txt
 http://localhost:8000
@@ -174,13 +181,13 @@ Inicia o servidor Next.js em desenvolvimento.
 npm run build
 ```
 
-Gera a build de producao.
+Gera a build de produção.
 
 ```powershell
 npm run start
 ```
 
-Inicia a aplicacao em modo producao depois do build.
+Inicia a aplicação em modo produção depois do build.
 
 ```powershell
 npm run lint
@@ -188,36 +195,42 @@ npm run lint
 
 Executa o ESLint.
 
-## Rotas da aplicacao
+```powershell
+npm run test
+```
 
-| Rota | Arquivo | Descricao |
+Executa a suíte de testes com Vitest.
+
+## Rotas da aplicação
+
+| Rota | Arquivo | Descrição |
 | --- | --- | --- |
-| `/` | `src/app/page.tsx` | Entrada inicial da aplicacao. |
+| `/` | `src/app/page.tsx` | Entrada inicial da aplicação. |
 | `/LoginPage` | `src/app/LoginPage/page.tsx` | Login e cadastro. |
 | `/dashboard` | `src/app/dashboard/page.tsx` | Kanban de leads e indicadores. |
-| `/leads` | `src/app/leads/page.tsx` | Criacao e gerenciamento de leads. |
-| `/imoveis` | `src/app/imoveis/page.tsx` | Criacao e gerenciamento de imoveis. |
-| `/status` | `src/app/status/page.tsx` | Criacao e gerenciamento dos status do funil. |
+| `/leads` | `src/app/leads/page.tsx` | Criação e gerenciamento de leads. |
+| `/imoveis` | `src/app/imoveis/page.tsx` | Criação e gerenciamento de imóveis. |
+| `/status` | `src/app/status/page.tsx` | Criação e gerenciamento dos status do funil. |
 
 ## Fluxo de dados
 
 O frontend usa `api.ts` como ponto central para chamadas HTTP:
 
 ```txt
-Componentes e paginas
+Componentes e páginas
   -> src/app/services/api.ts
   -> Backend NestJS em NEXT_PUBLIC_API_URL
 ```
 
 Principais grupos de endpoints no cliente:
 
-- `api.auth`: registro, login, usuario atual e logout.
+- `api.auth`: registro, login, usuário atual e logout.
 - `api.statuses`: CRUD dos status do funil.
-- `api.leads`: CRUD de leads, Kanban e movimentacao entre status.
-- `api.imoveis`: CRUD de imoveis.
+- `api.leads`: CRUD de leads, Kanban e movimentação entre status.
+- `api.imoveis`: CRUD de imóveis.
 - `api.ai`: envio de mensagens para o chatbot.
 
-O token JWT e salvo em `localStorage` com a chave:
+O token JWT é salvo em `localStorage` com a chave:
 
 ```txt
 front-case:auth-token
@@ -384,12 +397,63 @@ Os status criados nessa tela alimentam:
 
 - legenda do dashboard;
 - colunas do Kanban;
-- select de status na criacao/edicao de leads;
+- select de status na criação/edição de leads;
 - contexto enviado para IA pelo backend.
+
+## Testes
+
+O projeto usa Vitest com React Testing Library para testar componentes e abas
+principais da aplicação.
+
+Configuração:
+
+```txt
+vitest.config.mts
+src/test/setup.ts
+```
+
+O setup global inclui:
+
+- `@testing-library/jest-dom/vitest`;
+- mocks de `next/navigation`, `next/link` e `next/image`;
+- mocks de APIs do navegador usadas por Mantine e pelo chat, como `matchMedia`
+  e `scrollTo`.
+
+Arquivos de teste:
+
+```txt
+src/app/__tests__/Alert.test.tsx
+src/app/__tests__/ChatBot.test.tsx
+src/app/__tests__/Dashboardpage.test.tsx
+src/app/__tests__/Imoveispage.test.tsx
+src/app/__tests__/Leadspage.test.tsx
+src/app/__tests__/ModalLead.test.tsx
+src/app/__tests__/NavbarMinimal.test.tsx
+src/app/__tests__/Statuspage.test.tsx
+src/app/__tests__/ToggleSwitch.test.tsx
+```
+
+O que a suíte cobre:
+
+- renderização e fechamento automático do `Alert`;
+- alternância do `ToggleSwitch`;
+- exibição e fechamento do `ModalLead`;
+- rota ativa na `NavbarMinimal`;
+- abertura, ocultação e envio de mensagem pelo `ChatBot`;
+- carregamento e movimentação de leads no dashboard;
+- criação/edição de leads;
+- criação/edição/exclusão de imóveis;
+- criação/edição/exclusão de status.
+
+Para rodar:
+
+```powershell
+npm run test
+```
 
 ## Estilos e UI
 
-O projeto usa CSS Modules por pagina/componente:
+O projeto usa CSS Modules por página/componente:
 
 ```txt
 Dashboard.module.css
@@ -399,29 +463,30 @@ Status.module.css
 ChatBot.module.css
 ```
 
-Tambem existe `globals.css`, onde ficam variaveis globais de tema, cores e
+Também existe `globals.css`, onde ficam variáveis globais de tema, cores e
 estilos base.
 
 Componentes compartilhados:
 
-- `NavbarMinimal`: navegacao lateral/superior responsiva.
+- `NavbarMinimal`: navegação lateral/superior responsiva.
 - `Alert`: mensagens de erro/sucesso.
 - `ModalLead`: detalhes do lead.
-- `ToggleSwitch`: alternancia de tema.
+- `ToggleSwitch`: alternância de tema.
 - `ChatBot`: assistente flutuante.
 
-Icones principais sao de `@tabler/icons-react`.
+Ícones principais são de `@tabler/icons-react`.
 
-## Validacao
+## Validação
 
-Antes de abrir PR ou entregar alteracoes:
+Antes de abrir PR ou entregar alterações:
 
 ```powershell
+npm run test
 npm run lint
 npm run build
 ```
 
-Esses comandos validam regras de lint, TypeScript e build do Next.js.
+Esses comandos validam testes, regras de lint, TypeScript e build do Next.js.
 
 ## Projetos relacionados
 

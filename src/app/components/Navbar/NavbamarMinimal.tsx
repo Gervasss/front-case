@@ -59,7 +59,7 @@ const navItems = [
   { icon: IconHome2, label: "Dashboard", href: "/dashboard" },
   { icon: IconLayoutKanban, label: "Leads", href: "/leads" },
   { icon: IconFlag, label: "Status", href: "/status" },
-  { icon: IconBuildingCommunity, label: "Imoveis", href: "/imoveis" },
+  { icon: IconBuildingCommunity, label: "Imóveis", href: "/imoveis" },
 ];
 
 export function NavbarMinimal() {
@@ -77,8 +77,8 @@ export function NavbarMinimal() {
   return (
     <nav className={classes.navbar}>
       <Center>
-        <Link className={classes.brand} href="/dashboard" aria-label="SI Solucoes Imobiliarias">
-          <Image src="/assets/logo.png" alt="SI Solucoes Imobiliarias" width={42} height={42} priority />
+        <Link className={classes.brand} href="/dashboard" aria-label="SI Soluções Imobiliárias">
+          <Image src="/assets/logo.png" alt="SI Soluções Imobiliárias" width={42} height={42} priority />
         </Link>
       </Center>
 

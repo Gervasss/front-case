@@ -84,7 +84,7 @@ export default function ImoveisPage() {
       const message =
         error instanceof ApiError
           ? error.message
-          : "Nao foi possivel carregar os imoveis.";
+          : "Não foi possível carregar os imóveis.";
       setAlert({ type: "error", message });
     } finally {
       setIsLoading(false);
@@ -134,10 +134,10 @@ export default function ImoveisPage() {
     try {
       if (editingImovel) {
         await api.imoveis.update(editingImovel.id, payload);
-        setAlert({ type: "success", message: "Imovel atualizado." });
+        setAlert({ type: "success", message: "Imóvel atualizado." });
       } else {
         await api.imoveis.create(payload);
-        setAlert({ type: "success", message: "Imovel cadastrado." });
+        setAlert({ type: "success", message: "Imóvel cadastrado." });
       }
 
       startCreate();
@@ -146,7 +146,7 @@ export default function ImoveisPage() {
       const message =
         error instanceof ApiError
           ? error.message
-          : "Nao foi possivel salvar o imovel.";
+          : "Não foi possível salvar o imóvel.";
       setAlert({ type: "error", message });
     } finally {
       setIsSaving(false);
@@ -154,7 +154,7 @@ export default function ImoveisPage() {
   }
 
   async function deleteImovel(imovel: Imovel) {
-    const confirmed = window.confirm(`Apagar o imovel ${imovel.title}?`);
+    const confirmed = window.confirm(`Apagar o imóvel ${imovel.title}?`);
 
     if (!confirmed) {
       return;
@@ -162,13 +162,13 @@ export default function ImoveisPage() {
 
     try {
       await api.imoveis.remove(imovel.id);
-      setAlert({ type: "success", message: "Imovel apagado." });
+      setAlert({ type: "success", message: "Imóvel apagado." });
       await loadData();
     } catch (error) {
       const message =
         error instanceof ApiError
           ? error.message
-          : "Nao foi possivel apagar o imovel.";
+          : "Não foi possível apagar o imóvel.";
       setAlert({ type: "error", message });
     }
   }
@@ -181,13 +181,13 @@ export default function ImoveisPage() {
         {alert ? <Alert message={alert.message} type={alert.type} onClose={() => setAlert(null)} /> : null}
 
         <header className={styles.header}>
-          <h1>Imoveis</h1>
+          <h1>Imóveis</h1>
         </header>
 
         <div className={styles.contentGrid}>
           <section className={styles.formPanel}>
             <div className={styles.formHeader}>
-              <h1>{editingImovel ? "Editar imovel" : "Cadastrar imovel"}</h1>
+              <h1>{editingImovel ? "Editar imóvel" : "Cadastrar imóvel"}</h1>
             </div>
             <div className={styles.clearAction}>
               <button className={styles.secondaryButton} type="button" onClick={startCreate}>
@@ -197,7 +197,7 @@ export default function ImoveisPage() {
 
             <form className={styles.form} onSubmit={handleSubmit}>
               <label>
-                <span>Titulo</span>
+                <span>Título</span>
                 <input value={form.title} onChange={(event) => updateForm("title", event.target.value)} required />
               </label>
               <div className={styles.formGrid}>
@@ -211,7 +211,7 @@ export default function ImoveisPage() {
                 </label>
               </div>
               <label>
-                <span>Endereco</span>
+                <span>Endereço</span>
                 <input value={form.address} onChange={(event) => updateForm("address", event.target.value)} required />
               </label>
               <div className={styles.formGrid}>
@@ -234,29 +234,29 @@ export default function ImoveisPage() {
                   <input type="number" min="0" value={form.bathrooms} onChange={(event) => updateForm("bathrooms", event.target.value)} />
                 </label>
                 <label>
-                  <span>Area m2</span>
+                  <span>Área m²</span>
                   <input type="number" min="0" value={form.areaM2} onChange={(event) => updateForm("areaM2", event.target.value)} />
                 </label>
               </div>
               <label>
-                <span>Observacoes</span>
+                <span>Observações</span>
                 <textarea value={form.notes} onChange={(event) => updateForm("notes", event.target.value)} rows={4} />
               </label>
               <button className={styles.primaryButton} type="submit" disabled={isSaving}>
-                {isSaving ? "Salvando..." : editingImovel ? "Salvar edicao" : "Cadastrar imovel"}
+                {isSaving ? "Salvando..." : editingImovel ? "Salvar edição" : "Cadastrar imóvel"}
               </button>
             </form>
           </section>
 
           <section className={styles.listPanel}>
             <div className={styles.formHeader}>
-              <h1>Gerenciar imoveis</h1>
+              <h1>Gerenciar imóveis</h1>
             </div>
            
 
-            {isLoading ? <p className={styles.emptyState}>Carregando imoveis...</p> : null}
+            {isLoading ? <p className={styles.emptyState}>Carregando imóveis...</p> : null}
 
-            {!isLoading && !sortedImoveis.length ? <p className={styles.emptyState}>Nenhum imovel cadastrado.</p> : null}
+            {!isLoading && !sortedImoveis.length ? <p className={styles.emptyState}>Nenhum imóvel cadastrado.</p> : null}
 
             <div className={styles.imovelList}>
               {sortedImoveis.map((imovel) => (
@@ -264,7 +264,7 @@ export default function ImoveisPage() {
                   <div className={styles.cardContent}>
                
                     <div className={styles.cardGrid}>
-                      <span>Imovel</span>
+                      <span>Imóvel</span>
                       <span>Tipo</span>
                       <span>Local</span>
                       <span>Quartos</span>

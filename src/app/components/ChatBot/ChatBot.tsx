@@ -20,7 +20,7 @@ const starterMessages: UiMessage[] = [
     id: "welcome",
     role: "assistant",
     content:
-      "Ola! Sou o assistente da SI. Posso ajudar a priorizar leads, montar follow-ups e organizar o funil imobiliario.",
+      "Olá! Sou o assistente da SI. Posso ajudar a priorizar leads, montar follow-ups e organizar o funil imobiliário.",
   },
 ];
 
@@ -41,7 +41,7 @@ const defaultSuggestions: QuickSuggestion[] = [
 
 const hiddenRoutes = new Set(["/", "/LoginPage"]);
 
-// Normaliza sugestoes vindas da API para o formato usado pelos botoes do chat.
+// Normaliza sugestões vindas da API para o formato usado pelos botões do chat.
 function toQuickSuggestion(suggestion: string): QuickSuggestion {
   return {
     label: suggestion,
@@ -62,27 +62,27 @@ function buildContext(pathname: string) {
       : pathname.includes("leads")
         ? {
             screen: "leads",
-            title: "Gestao de leads",
+            title: "Gestão de leads",
             userIntent: "criar, editar, qualificar e planejar follow-ups de leads",
             relevantCrmData: ["crm.recentLeads", "crm.statuses", "crm.upcomingContacts", "crm.imoveis"],
           }
         : pathname.includes("imoveis")
           ? {
               screen: "imoveis",
-              title: "Gestao de imoveis",
-              userIntent: "consultar carteira de imoveis e relacionar imoveis com oportunidades",
+              title: "Gestão de imóveis",
+              userIntent: "consultar carteira de imóveis e relacionar imóveis com oportunidades",
               relevantCrmData: ["crm.imoveis", "crm.recentLeads"],
             }
           : pathname.includes("status")
             ? {
                 screen: "status",
-                title: "Gestao de status do funil",
+                title: "Gestão de status do funil",
                 userIntent: "organizar etapas do funil e entender quantidade de leads por status",
                 relevantCrmData: ["crm.statuses", "crm.totals"],
               }
             : {
                 screen: "crm",
-                title: "CRM imobiliario",
+                title: "CRM imobiliário",
                 userIntent: "obter apoio comercial geral",
                 relevantCrmData: ["crm.totals", "crm.statuses", "crm.recentLeads", "crm.upcomingContacts", "crm.imoveis"],
               };
@@ -90,9 +90,9 @@ function buildContext(pathname: string) {
   return JSON.stringify({
     source: "front-case-web",
     system: {
-      name: "SI - Solucoes Imobiliarias",
-      domain: "CRM imobiliario",
-      assistantRole: "assistente comercial para corretores imobiliarios",
+      name: "SI - Soluções Imobiliárias",
+      domain: "CRM imobiliário",
+      assistantRole: "assistente comercial para corretores imobiliários",
     },
     conversationMode: "contextual-crm-ai",
     currentRoute: {
@@ -100,32 +100,32 @@ function buildContext(pathname: string) {
       ...routeContext,
     },
     responseGuidelines: [
-      "Responda em portugues do Brasil.",
-      "Responda como IA contextual, analisando a pergunta do usuario e os dados reais do CRM enviados pelo backend.",
-      "Priorize recomendacoes praticas para atendimento, follow-up, funil e carteira de imoveis.",
+      "Responda em português do Brasil.",
+      "Responda como IA contextual, analisando a pergunta do usuário e os dados reais do CRM enviados pelo backend.",
+      "Priorize recomendações práticas para atendimento, follow-up, funil e carteira de imóveis.",
       "Use os dados do objeto crm que o backend injeta no contexto.",
       "Use matchedCrm como recorte prioritario quando existir, pois ele foi montado a partir da conversa atual no backend.",
-      "Se o usuario citar um cliente, lead, empresa ou imovel pelo nome, procure correspondencias em crm.recentLeads e crm.imoveis antes de responder.",
-      "Se o usuario citar cliente e imovel na mesma pergunta, cruze contactName, company, imovel.title e imovel.id para encontrar o lead correto antes de concluir que ha duplicidade.",
-      "Para perguntas como 'qual o proximo passo do cliente X', use todas as informacoes cadastradas desse lead: status, imovel, valor, origem, notes, nextFollowUp, createdAt e updatedAt.",
-      "Quando o lead tiver imovel relacionado, trate lead.imovel como a fonte principal do imovel e use crm.imoveis apenas para complementar pelo id ou titulo.",
-      "Ao priorizar leads, considere os status reais em crm.statuses, a ordem do funil, leadsCount por status, proximos follow-ups, valor, origem e updatedAt.",
-      "Quando houver mais de uma correspondencia possivel para um nome, mencione a ambiguidade e peca uma confirmacao curta.",
-      "Quando um dado nao existir em crm, diga que a informacao nao esta cadastrada.",
-      "Nao invente leads, status, valores, contatos, datas ou imoveis.",
+      "Se o usuário citar um cliente, lead, empresa ou imóvel pelo nome, procure correspondências em crm.recentLeads e crm.imoveis antes de responder.",
+      "Se o usuário citar cliente e imóvel na mesma pergunta, cruze contactName, company, imovel.title e imovel.id para encontrar o lead correto antes de concluir que há duplicidade.",
+      "Para perguntas como 'qual o próximo passo do cliente X', use todas as informações cadastradas desse lead: status, imóvel, valor, origem, notes, nextFollowUp, createdAt e updatedAt.",
+      "Quando o lead tiver imóvel relacionado, trate lead.imovel como a fonte principal do imóvel e use crm.imoveis apenas para complementar pelo id ou título.",
+      "Ao priorizar leads, considere os status reais em crm.statuses, a ordem do funil, leadsCount por status, próximos follow-ups, valor, origem e updatedAt.",
+      "Quando houver mais de uma correspondência possível para um nome, mencione a ambiguidade e peça uma confirmação curta.",
+      "Quando um dado não existir em crm, diga que a informação não está cadastrada.",
+      "Não invente leads, status, valores, contatos, datas ou imóveis.",
     ],
     answerStyle: {
-      avoid: ["respostas genericas", "scripts fixos quando ha dados do cliente", "status ou clientes inventados"],
-      prefer: ["proximo passo acionavel", "justificativa baseada nos campos do CRM", "mensagens prontas apenas quando solicitadas"],
+      avoid: ["respostas genéricas", "scripts fixos quando há dados do cliente", "status ou clientes inventados"],
+      prefer: ["próximo passo acionável", "justificativa baseada nos campos do CRM", "mensagens prontas apenas quando solicitadas"],
     },
     backendContextShape: {
       crm: {
-        totals: "contadores de statuses, leads recentes, proximos contatos e imoveis",
+        totals: "contadores de statuses, leads recentes, próximos contatos e imóveis",
         statuses: "etapas do funil ordenadas, com id, nome, cor, ordem e leadsCount",
-        recentLeads: "ate 50 leads recentes com status, dados de contato, valor, follow-up e imovel relacionado",
-        upcomingContacts: "ate 15 leads com proximo follow-up futuro",
-        imoveis: "ate 30 imoveis recentes da carteira",
-        unavailableData: "dados que ainda nao existem no CRM",
+        recentLeads: "até 50 leads recentes com status, dados de contato, valor, follow-up e imóvel relacionado",
+        upcomingContacts: "até 15 leads com próximo follow-up futuro",
+        imoveis: "até 30 imóveis recentes da carteira",
+        unavailableData: "dados que ainda não existem no CRM",
       },
     },
   });
@@ -199,14 +199,14 @@ export function ChatBot() {
       const message =
         error instanceof ApiError
           ? error.message
-          : "Nao consegui falar com o assistente agora.";
+          : "Não consegui falar com o assistente agora.";
 
       setMessages((current) => [
         ...current,
         {
           id: crypto.randomUUID(),
           role: "assistant",
-          content: `${message} Confira se o microservico Python esta rodando em http://localhost:8000.`,
+          content: `${message} Confira se o microserviço Python está rodando em http://localhost:8000.`,
         },
       ]);
     } finally {

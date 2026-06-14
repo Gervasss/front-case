@@ -107,14 +107,14 @@ export default function LeadsPage() {
         const message =
           imovelResult.error instanceof ApiError
             ? imovelResult.error.message
-            : "Nao foi possivel carregar os imoveis.";
+            : "Não foi possível carregar os imóveis.";
         setAlert({ type: "error", message });
       }
     } catch (error) {
       const message =
         error instanceof ApiError
           ? error.message
-          : "Nao foi possivel carregar os leads.";
+          : "Não foi possível carregar os leads.";
       setAlert({ type: "error", message });
     } finally {
       setIsLoading(false);
@@ -192,7 +192,7 @@ export default function LeadsPage() {
       const message =
         error instanceof ApiError
           ? error.message
-          : "Nao foi possivel salvar o lead.";
+          : "Não foi possível salvar o lead.";
       setAlert({ type: "error", message });
     } finally {
       setIsSaving(false);
@@ -214,7 +214,7 @@ export default function LeadsPage() {
       const message =
         error instanceof ApiError
           ? error.message
-          : "Nao foi possivel apagar o lead.";
+          : "Não foi possível apagar o lead.";
       setAlert({ type: "error", message });
     }
   }
@@ -247,9 +247,9 @@ export default function LeadsPage() {
                 <input value={form.contactName} onChange={(event) => updateForm("contactName", event.target.value)} required />
               </label>
               <label>
-                <span>Imovel de interesse</span>
+                <span>Imóvel de interesse</span>
                 <select value={form.imovelId} onChange={(event) => handleImovelChange(event.target.value)} required>
-                  <option value="">Selecione um imovel</option>
+                  <option value="">Selecione um imóvel</option>
                   {imoveis.map((imovel) => (
                     <option key={imovel.id} value={imovel.id}>
                       {getImovelTitle(imovel)} - {formatCurrency(getImovelValue(imovel))}
@@ -288,15 +288,15 @@ export default function LeadsPage() {
                 </label>
               </div>
               <label>
-                <span>Proximo contato</span>
+                <span>Próximo contato</span>
                 <input type="date" value={form.nextFollowUp} onChange={(event) => updateForm("nextFollowUp", event.target.value)} />
               </label>
               <label>
-                <span>Observacoes</span>
+                <span>Observações</span>
                 <textarea value={form.notes} onChange={(event) => updateForm("notes", event.target.value)} rows={4} />
               </label>
               <button className={styles.primaryButton} type="submit" disabled={isSaving}>
-                {isSaving ? "Salvando..." : editingLead ? "Salvar edicao" : "Cadastrar lead"}
+                {isSaving ? "Salvando..." : editingLead ? "Salvar edição" : "Cadastrar lead"}
               </button>
             </form>
           </section>
@@ -318,7 +318,7 @@ export default function LeadsPage() {
                  
                     <div className={styles.cardGrid}>
                       <span>Cliente</span>
-                      <span>Imovel</span>
+                      <span>Imóvel</span>
                       <span>Status</span>
                       <span>Valor</span>
                       <span>Origem</span>

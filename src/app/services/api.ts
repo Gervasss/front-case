@@ -65,7 +65,7 @@ const http = axios.create({
 
 // Interceptor executado antes de cada request.
 http.interceptors.request.use((config) => {
-  // Header interno usado quando uma chamada precisa ignorar autenticacao.
+  // Header interno usado quando uma chamada precisa ignorar autenticação.
   const skipAuth = config.headers.get("x-skip-auth");
 
   // Token explicito da chamada ou token salvo no navegador.
@@ -106,10 +106,10 @@ export function clearAuthToken() {
 
 // Wrapper generico para padronizar requests, responses e erros.
 async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
-  // Separa body/token do restante da configuracao aceita pelo Axios.
+  // Separa body/token do restante da configuração aceita pelo Axios.
   const { body, headers, token, ...requestOptions } = options;
 
-  // Monta a configuracao final que sera enviada para a instancia http.
+  // Monta a configuração final que será enviada para a instância http.
   const config: AxiosRequestConfig = {
     url: path,
     data: body,
@@ -131,7 +131,7 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
     const response: AxiosResponse<T> = await http.request<T>(config);
     return response.data;
   } catch (error) {
-    // Normaliza erros vindos do Axios para o ApiError da aplicacao.
+    // Normaliza erros vindos do Axios para o ApiError da aplicação.
     if (axios.isAxiosError(error)) {
       const axiosError = error as AxiosError;
       const status = axiosError.response?.status ?? 500;
@@ -142,31 +142,31 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
         typeof data === "object" && data !== null && "message" in data
           ? String((data as { message: unknown }).message)
           : axiosError.request && !axiosError.response
-            ? `Nao foi possivel conectar com a API em ${API_URL}. Confira se o backend esta rodando e se NEXT_PUBLIC_API_URL esta correto.`
+            ? `Não foi possível conectar com a API em ${API_URL}. Confira se o backend está rodando e se NEXT_PUBLIC_API_URL está correto.`
             : "Erro ao comunicar com a API.";
 
       // Lanca um erro consistente para a UI tratar.
       throw new ApiError(status, message, data);
     }
 
-    // Preserva erros inesperados que nao vieram do Axios.
+    // Preserva erros inesperados que não vieram do Axios.
     throw error;
   }
 }
 
 // Monta query string a partir de filtros opcionais.
 function buildQuery(params?: Record<string, string | undefined>) {
-  // URLSearchParams evita concatenacao manual de parametros.
+  // URLSearchParams evita concatenação manual de parâmetros.
   const query = new URLSearchParams();
 
-  // Adiciona apenas parametros com valor.
+  // Adiciona apenas parâmetros com valor.
   Object.entries(params ?? {}).forEach(([key, value]) => {
     if (value) {
       query.set(key, value);
     }
   });
 
-  // Retorna a query pronta ou string vazia quando nao houver filtros.
+  // Retorna a query pronta ou string vazia quando não houver filtros.
   const queryString = query.toString();
   return queryString ? `?${queryString}` : "";
 }
@@ -186,7 +186,7 @@ function toImovelApiPayload(payload: CreateImovelPayload | UpdateImovelPayload) 
   };
 }
 
-// Objeto que agrupa todos os endpoints da aplicacao.
+// Objeto que agrupa todos os endpoints da aplicação.
 export const api = {
   // Auth
   auth: {
