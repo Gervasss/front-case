@@ -47,8 +47,8 @@ const leads: Lead[] = [
 ];
 
 const kanban: KanbanColumn[] = [
-  { id: "novo", name: "Novo", color: "#20b2aa", leads } as KanbanColumn,
-  { id: "visita", name: "Visita", color: "#f59f00", leads: [] } as KanbanColumn,
+  { id: "novo", name: "Novo", color: "#20b2aa", order: 1, leads },
+  { id: "visita", name: "Visita", color: "#f59f00", order: 2, leads: [] },
 ];
 
 describe("DashboardPage", () => {
